@@ -13,7 +13,7 @@ const gameStartBtn = document.querySelector("#gameStartBtn");
 const gameEndDiv = document.querySelector("#gameEndDiv");
 const gameWinLoseSpan = document.querySelector("#gameWinLoseSpan");
 const gameEndScoreSpan = document.querySelector("#gameEndScoreSpan");
-
+const gameRestartBtn = document.querySelector("#gameRestartBtn");
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -26,7 +26,7 @@ class GameScene extends Phaser.Scene {
     this.textScore;
     this.textTime;
     this.timedEvent;
-    this.remainingTime; 
+    this.remainingTime;
     this.splatMusic;
     this.bgmMusic;
     this.emitter;
@@ -42,7 +42,6 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-
     this.scene.pause("scene-game");
 
     //Background
@@ -62,6 +61,13 @@ class GameScene extends Phaser.Scene {
     this.splatMusic = this.sound.add("splat").setVolume(0.2);
     this.bgmMusic = this.sound.add("bgm").setLoop(true).setVolume(0.5);
     this.bgmMusic.play();
+    this.muteToggleBtn = document.querySelector("#muteToggleBtn");
+    this.muteToggleBtn.addEventListener("click", () => {
+      this.bgmMusic.setMute(!this.bgmMusic.mute);
+      this.muteToggleBtn.textContent = this.bgmMusic.mute
+        ? "🔇"
+        : "🔊";
+    });
 
     // Player
     const basketScale = 0.15;
@@ -109,10 +115,10 @@ class GameScene extends Phaser.Scene {
     this.timedEvent = this.time.delayedCall(30000, this.gameOver, [], this);
 
     //Emitter
-    this.emitter = this.add.particles(0,0, "apple-splat",{
+    this.emitter = this.add.particles(0, 0, "apple-splat", {
       speed: 100,
-      gravityY : speedDown - 200,
-      scale: 0.04, 
+      gravityY: speedDown - 200,
+      scale: 0.04,
       lifespan: 500,
       emitting: false,
     });
@@ -120,7 +126,9 @@ class GameScene extends Phaser.Scene {
 
   update() {
     this.remainingTime = this.timedEvent.getRemainingSeconds();
-    this.textTime.setText(`Remaining Time: ${Math.round(this.remainingTime).toString()}`);
+    this.textTime.setText(
+      `Remaining Time: ${Math.round(this.remainingTime).toString()}`
+    );
     if (this.target.y >= size.height) {
       this.target.setY(0);
       this.target.setX(this.getRandomX());
@@ -143,7 +151,7 @@ class GameScene extends Phaser.Scene {
   targetHit() {
     this.splatMusic.play();
     const { x, y } = this.player.getCenter();
-    this.emitter.explode(10, x, y -10);
+    this.emitter.explode(10, x, y - 10);
     this.target.setY(0);
     this.target.setX(this.getRandomX());
     this.points += 1;
@@ -157,12 +165,12 @@ class GameScene extends Phaser.Scene {
     sprite.setOffset(offsetX, offsetY);
   }
 
-  gameOver(){
+  gameOver() {
     this.sys.game.destroy(true);
-    if(this.points >= 10) {
+    if (this.points >= 10) {
       gameEndScoreSpan.textContent = this.points;
       gameWinLoseSpan.textContent = "Win!";
-    } else{
+    } else {
       gameEndScoreSpan.textContent = this.points;
       gameWinLoseSpan.textContent = "Lose!";
     }
@@ -190,4 +198,8 @@ const game = new Phaser.Game(config);
 gameStartBtn.addEventListener("click", () => {
   gameStartDiv.style.display = "none";
   game.scene.resume("scene-game");
+});
+
+gameRestartBtn.addEventListener("click", () => {
+  window.location.reload();
 });

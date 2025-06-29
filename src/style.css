@@ -33,6 +33,8 @@ header,footer{
 main{
   flex: 1;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #gameCanvas{
@@ -45,9 +47,12 @@ main{
 }
 
 .gameUI {
-  width: 100%;
+  width: 500px;
   height: 100%;
-  background-color: var(--accentColor);
+  background-image: url("./assets/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,7 +73,7 @@ main{
   display: none;
 }
 
-#gameStartBtn{
+#gameStartBtn, #gameRestartBtn {
   display: inline-block;
   width: 100px;
   padding: 8px 15px;
@@ -83,7 +88,27 @@ main{
   transition: background-color 0.3s, color 0.3s;
 }
 
-#gameStartBtn:hover{
+#gameStartBtn:hover, #gameRestartBtn:hover {
+  background-color: var(--lightColor);
+  color: var(--darkColor);
+}
+
+#muteToggleBtn {
+  position: absolute;
+  top: 8%;
+  right: 30%;
+  z-index: 10;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: transparent;
+  color: var(--lightColor);
+  border: 2px solid var(--lightColor);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#muteToggleBtn:hover {
   background-color: var(--lightColor);
   color: var(--darkColor);
 }
