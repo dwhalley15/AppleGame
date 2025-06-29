@@ -49,7 +49,7 @@ main{
 .gameUI {
   width: 500px;
   height: 100%;
-  background-image: url("./assets/bg.png");
+  background-image: url("/assets/bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

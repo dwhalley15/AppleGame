@@ -8,6 +8,7 @@ const size = {
 
 const speedDown = 300;
 
+const gameCanvas = document.querySelector("#gameCanvas");
 const gameStartDiv = document.querySelector("#gameStartDiv");
 const gameStartBtn = document.querySelector("#gameStartBtn");
 const gameEndDiv = document.querySelector("#gameEndDiv");
@@ -30,6 +31,7 @@ class GameScene extends Phaser.Scene {
     this.splatMusic;
     this.bgmMusic;
     this.emitter;
+    this.isReady = false;
   }
 
   preload() {
@@ -42,7 +44,10 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.pause("scene-game");
+    this.time.delayedCall(0, () => {
+      this.scene.pause();
+      this.isReady = true;
+    });
 
     //Background
     const bg = this.add.image(0, 0, "bg");
@@ -64,9 +69,7 @@ class GameScene extends Phaser.Scene {
     this.muteToggleBtn = document.querySelector("#muteToggleBtn");
     this.muteToggleBtn.addEventListener("click", () => {
       this.bgmMusic.setMute(!this.bgmMusic.mute);
-      this.muteToggleBtn.textContent = this.bgmMusic.mute
-        ? "🔇"
-        : "🔊";
+      this.muteToggleBtn.textContent = this.bgmMusic.mute ? "🔇" : "🔊";
     });
 
     // Player
@@ -79,6 +82,7 @@ class GameScene extends Phaser.Scene {
     this.player.body.setAllowGravity(false);
     this.player.setCollideWorldBounds(true);
     this.setCenteredBody(this.player, 500, 15);
+    this.player.setDepth(1);
 
     //Target
     const targetScale = 0.1;
@@ -88,6 +92,7 @@ class GameScene extends Phaser.Scene {
       .setScale(targetScale);
     this.target.setMaxVelocity(0, speedDown);
     this.setCenteredBody(this.target, 500, 100);
+    this.target.setDepth(0);
 
     //Hit detection
     this.physics.add.overlap(
@@ -122,6 +127,7 @@ class GameScene extends Phaser.Scene {
       lifespan: 500,
       emitting: false,
     });
+    this.emitter.setDepth(2);
   }
 
   update() {
@@ -183,6 +189,10 @@ const config = {
   width: size.width,
   height: size.height,
   canvas: gameCanvas,
+  render: {
+    pixelArt: false,
+    antialias: true,
+  },
   physics: {
     default: "arcade",
     arcade: {
@@ -196,6 +206,10 @@ const config = {
 const game = new Phaser.Game(config);
 
 gameStartBtn.addEventListener("click", () => {
+  const scene = game.scene.getScene("scene-game");
+  if (!scene.isReady) {
+    return;
+  }
   gameStartDiv.style.display = "none";
   game.scene.resume("scene-game");
 });
