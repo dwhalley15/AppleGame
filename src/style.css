@@ -112,3 +112,34 @@ main{
   background-color: var(--lightColor);
   color: var(--darkColor);
 }
+
+@media screen and (max-width: 900px) {
+  .gameUI {
+    width: 100%;
+    padding: 20px;
+  }
+
+  #gameCanvas{
+    width: 100%;
+  }
+
+  #gameStartBtn, #gameRestartBtn {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  #muteToggleBtn {
+    position: fixed;
+    top: 4%;
+    right: 8%;
+    width: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  h1{
+    font-size: 24px;
+  }
+  
+}

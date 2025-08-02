@@ -121,6 +121,21 @@ class GameScene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
     });
 
+    //Mobile controls
+    this.input.on("pointerdown", (pointer) => {
+      this.isDragging = true;
+      this.handleDrag(pointer);
+    });
+    this.input.on("pointermove", (pointer) => {
+      if (this.isDragging) {
+        this.handleDrag(pointer);
+      }
+    });
+    this.input.on("pointerup", () => {
+      this.isDragging = false;
+    });
+    this.dragTargetX = this.player.x;
+
     //Score
     this.textScore = this.add.text(size.width - 120, 10, "Score: 0", {
       font: "25px Arial",
@@ -152,12 +167,23 @@ class GameScene extends Phaser.Scene {
     const leftPressed = this.cursor.left.isDown || this.keys.left.isDown;
     const rightPressed = this.cursor.right.isDown || this.keys.right.isDown;
 
-    if (leftPressed) {
-      this.player.setVelocityX(-this.playerSpeed);
-    } else if (rightPressed) {
-      this.player.setVelocityX(this.playerSpeed);
-    } else {
+    if (this.isDragging) {
+      const lerpSpeed = 0.2;
+      this.player.x = Phaser.Math.Linear(
+        this.player.x,
+        this.dragTargetX,
+        lerpSpeed
+      );
+
       this.player.setVelocityX(0);
+    } else {
+      if (leftPressed) {
+        this.player.setVelocityX(-this.playerSpeed);
+      } else if (rightPressed) {
+        this.player.setVelocityX(this.playerSpeed);
+      } else {
+        this.player.setVelocityX(0);
+      }
     }
   }
 
@@ -248,6 +274,10 @@ class GameScene extends Phaser.Scene {
     this.sys.game.destroy(true);
     gameEndScoreSpan.textContent = this.points;
     gameEndDiv.style.display = "flex";
+  }
+
+  handleDrag(pointer) {
+    this.dragTargetX = Phaser.Math.Clamp(pointer.x, 0, this.game.config.width);
   }
 }
 
