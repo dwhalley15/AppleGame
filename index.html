@@ -1,17 +1,20 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apple Catcher Game</title>
-  </head>
-  <body>
-    <header>
-      <h1>Apple Catcher Game</p>
-    </header>
-    <main>
-      <button id="muteToggleBtn">🔊</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple Catcher Game</title>
+</head>
+
+<body>
+  <header>
+    <h1>Apple Catcher Game</p>
+  </header>
+  <main>
+    <button id="muteToggleBtn">🔊</button>
+    <div id="gameContainer">
       <canvas id="gameCanvas"></canvas>
       <div id="gameStartDiv" class="gameUI">
         <h2>Welcome to the Apple Catcher Game!</h2>
@@ -24,10 +27,12 @@
         <p>Your score: <span id="gameEndScoreSpan"></span></p>
         <button id="gameRestartBtn">Play Again</button>
       </div>
-    </main>
-    <footer>
-      <p>Classic Apple Catcher Game Re-imagined by Ortheyus 2025</p>
-    </footer>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    </div>
+  </main>
+  <footer>
+    <p>Classic Apple Catcher Game Re-imagined by Ortheyus 2025</p>
+  </footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

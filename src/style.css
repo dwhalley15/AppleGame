@@ -5,17 +5,18 @@
   --accentColor: #0D0D35;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html,body {
+html,
+body {
   height: 100%;
 }
 
-body{
+body {
   background-color: var(--darkColor);
   color: var(--lightColor);
   display: flex;
@@ -23,32 +24,44 @@ body{
   min-height: 100vh;
 }
 
-header,footer{
+header,
+footer {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
 }
 
-main{
+main {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#gameCanvas{
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#gameContainer {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  aspect-ratio: 1 / 1;
+  max-width: 100%;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
   z-index: 1;
+  touch-action: none; 
 }
 
 .gameUI {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 500px;
-  height: 100%;
+  height: 500px;
   background-image: url("/assets/bg.png");
   background-size: cover;
   background-position: center;
@@ -60,7 +73,7 @@ main{
   z-index: 2;
 }
 
-.gameUI *{
+.gameUI * {
   text-align: center;
   margin-top: 5px;
 }
@@ -73,7 +86,8 @@ main{
   display: none;
 }
 
-#gameStartBtn, #gameRestartBtn {
+#gameStartBtn,
+#gameRestartBtn {
   display: inline-block;
   width: 100px;
   padding: 8px 15px;
@@ -88,7 +102,8 @@ main{
   transition: background-color 0.3s, color 0.3s;
 }
 
-#gameStartBtn:hover, #gameRestartBtn:hover {
+#gameStartBtn:hover,
+#gameRestartBtn:hover {
   background-color: var(--lightColor);
   color: var(--darkColor);
 }
@@ -114,16 +129,24 @@ main{
 }
 
 @media screen and (max-width: 900px) {
+
+  #gameContainer {
+    width: 100%;
+  }
+
   .gameUI {
     width: 100%;
+    height: 100%;
     padding: 20px;
   }
 
-  #gameCanvas{
+  #gameCanvas {
     width: 100%;
+    height: auto;
   }
 
-  #gameStartBtn, #gameRestartBtn {
+  #gameStartBtn,
+  #gameRestartBtn {
     width: 80%;
     padding: 10px;
     font-size: 16px;
@@ -138,8 +161,8 @@ main{
     font-size: 16px;
   }
 
-  h1{
+  h1 {
     font-size: 24px;
   }
-  
+
 }
